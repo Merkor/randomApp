@@ -1,0 +1,22 @@
+###
+GET http://localhost:8080/api/session/by-time?time=2026-01-19T13:46:29.957
+
+###
+GET http://localhost:8080/api/cinemas/1
+
+###
+POST http://localhost:8080/api/cinemas
+Content-Type: application/json
+
+{
+   "name": "KARO",
+   "address": "Lenina 1"
+}
+
+###
+PATCH http://localhost:8080/api/cinemas/1
+Content-Type: application/json
+
+{
+"name": "KARO-PATCH"
+}

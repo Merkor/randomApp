@@ -1,0 +1,25 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 001_create_cinema_table
+      author: volkov
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/001_create_cinema_table.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 002_create_session_table
+      author: volkov
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/002_create_session_table.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 003_create_cinema_session_table
+      author: volkov
+      changes:
+        - sqlFile:
+            path: db/changelog/sql/003_create_cinema_session_table.sql
+            relativeToChangelogFile: false
