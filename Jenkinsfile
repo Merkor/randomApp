@@ -75,7 +75,7 @@ pipeline {
             echo '✅ Tests passed, application deployed'
         }
         failure {
-            echo '❌ Pipeline failed — deployment skipped'
+            echo '❌ Pipeline failed — deployment skipped!'
         }
     }
 }
