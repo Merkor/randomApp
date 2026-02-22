@@ -9,14 +9,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                url: 'git@github.com:Merkor/randomApp.git',
-                credentialsId: 'github-ssh'
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 sh 'mvn -B clean test'
