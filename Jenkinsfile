@@ -2,24 +2,43 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "randomapp"
-        IMAGE_TAG = "${env.BUILD_NUMBER}"
+        IMAGE_NAME     = "randomapp"
+        IMAGE_TAG      = "${BUILD_NUMBER}"
         CONTAINER_NAME = "randomapp-container"
+        GIT_URL        = "git@github.com:Merkor/randomApp.git"
+        GIT_BRANCH    = "main"
+        GIT_CREDS     = "gitHub"
     }
 
     stages {
 
         stage('Run Tests') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-17'
+                    args  '-v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 sh 'mvn -B clean test'
             }
         }
 
+        stage('Build Jar') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-17'
+                    args  '-v $HOME/.m2:/root/.m2'
+                }
+            }
+            steps {
+                sh 'mvn -B clean package -DskipTests'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                sh '''
-                docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                '''
+                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
             }
         }
 
@@ -53,10 +72,10 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment successful 🚀'
+            echo '✅ Tests passed, application deployed'
         }
         failure {
-            echo 'Build failed ❌ Container not updated'
+            echo '❌ Pipeline failed — deployment skipped'
         }
     }
 }
