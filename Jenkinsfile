@@ -12,6 +12,12 @@ pipeline {
 
     stages {
 
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Run Tests') {
             agent {
                 docker {
