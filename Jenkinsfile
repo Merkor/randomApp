@@ -5,9 +5,6 @@ pipeline {
         IMAGE_NAME     = "randomapp"
         IMAGE_TAG      = "${BUILD_NUMBER}"
         CONTAINER_NAME = "randomapp-container"
-        GIT_URL        = "git@github.com:Merkor/randomApp.git"
-        GIT_BRANCH    = "main"
-        GIT_CREDS     = "gitHub"
     }
 
     stages {
@@ -30,18 +27,6 @@ pipeline {
             }
             steps {
                 sh 'mvn -B clean test'
-            }
-        }
-
-        stage('Build Jar') {
-            agent {
-                docker {
-                    image 'maven:3.9.6-eclipse-temurin-17'
-                    args  '-v $HOME/.m2:/root/.m2'
-                }
-            }
-            steps {
-                sh 'mvn -B clean package -DskipTests'
             }
         }
 
