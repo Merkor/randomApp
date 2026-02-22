@@ -25,6 +25,9 @@ pipeline {
                     args  '-v $HOME/.m2:/root/.m2'
                 }
             }
+            environment {
+                SPRING_PROFILES_ACTIVE = 'docker'
+            }
             steps {
                 sh 'mvn -B clean test'
             }
@@ -62,6 +65,7 @@ pipeline {
                 sh '''
                 docker run -d \
                   --name ${CONTAINER_NAME} \
+                  -e SPRING_PROFILES_ACTIVE=docker \
                   -p 8090:8080 \
                   --restart unless-stopped \
                   ${IMAGE_NAME}:${IMAGE_TAG}
